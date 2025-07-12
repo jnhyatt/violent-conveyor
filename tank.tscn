@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cp3op0e0u727m"]
+
+[ext_resource type="Script" uid="uid://bxumbd01t1n16" path="res://tank.gd" id="1_6lwfj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ealj"]
+radius = 35.0
+
+[node name="Tank" type="RigidBody2D"]
+lock_rotation = true
+script = ExtResource("1_6lwfj")
+movement_speed = 35.0
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1ealj")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="UnitDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnitDetector"]
+
+[connection signal="body_entered" from="UnitDetector" to="." method="_entered_range"]
+[connection signal="body_exited" from="UnitDetector" to="." method="_exited_range"]

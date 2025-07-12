@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd3ppist253oq"]
+
+[ext_resource type="PackedScene" uid="uid://cp3op0e0u727m" path="res://tank.tscn" id="1_f0bdk"]
+[ext_resource type="Texture2D" uid="uid://delq7fwryh8ia" path="res://kenney/tanks/PNG/Default size/tanks_tankNavy5.png" id="2_tu45s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f0bdk"]
+radius = 200.0
+
+[node name="Tank" instance=ExtResource("1_f0bdk")]
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource("2_tu45s")
+
+[node name="CollisionShape2D" parent="UnitDetector" index="0"]
+shape = SubResource("CircleShape2D_f0bdk")
