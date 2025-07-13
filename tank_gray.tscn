@@ -1,15 +1,103 @@
-[gd_scene load_steps=4 format=3 uid="uid://bunfl4jbb2i5m"]
+[gd_scene load_steps=8 format=3 uid="uid://bunfl4jbb2i5m"]
 
 [ext_resource type="PackedScene" uid="uid://cp3op0e0u727m" path="res://tank.tscn" id="1_sp55c"]
+[ext_resource type="PackedScene" uid="uid://bmr733rj6m8uv" path="res://bullet.tscn" id="2_prucm"]
 [ext_resource type="Texture2D" uid="uid://277qk1mlsp84" path="res://kenney/tanks/PNG/Default size/tanks_tankGrey3.png" id="2_v8cex"]
+[ext_resource type="PackedScene" uid="uid://b7kakptlee7u7" path="res://splatter.tscn" id="4_dl24d"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4jc1h"]
-radius = 200.0
+[sub_resource type="Animation" id="Animation_dl24d"]
+resource_name = "fire"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlippyStuff:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.366667, 0.7, 1.2, 1.5),
+"transitions": PackedFloat32Array(0.554785, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-15, 0), Vector2(4, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlippyStuff:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.366667, 0.433333, 0.766667, 1.06667, 1.26667, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.732043),
+"update": 0,
+"values": [0.0, 0.174533, -0.523599, 0.0872665, 0.0, 0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.366667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_f03ew"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlippyStuff:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlippyStuff:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x1duo"]
+_data = {
+&"RESET": SubResource("Animation_f03ew"),
+&"fire": SubResource("Animation_dl24d")
+}
 
 [node name="RigidBody2D" instance=ExtResource("1_sp55c")]
+movement_speed = 60.0
+range = 300.0
+ammo = ExtResource("2_prucm")
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="FlippyStuff" index="0"]
 texture = ExtResource("2_v8cex")
 
-[node name="CollisionShape2D" parent="UnitDetector" index="0"]
-shape = SubResource("CircleShape2D_4jc1h")
+[node name="TurretPivot" parent="FlippyStuff" index="1"]
+position = Vector2(11, -21)
+
+[node name="Node" parent="." index="2"]
+spawnees = Array[PackedScene]([ExtResource("4_dl24d")])
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_x1duo")
+}
+
+[connection signal="body_entered" from="DetectionRange" to="." method="enemy_detected"]
+[connection signal="body_exited" from="DetectionRange" to="." method="enemy_lost"]

@@ -1,23 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://cp3op0e0u727m"]
+[gd_scene load_steps=6 format=3 uid="uid://cp3op0e0u727m"]
 
 [ext_resource type="Script" uid="uid://bxumbd01t1n16" path="res://tank.gd" id="1_6lwfj"]
+[ext_resource type="PackedScene" uid="uid://d15t8od6kqvpa" path="res://spawn_on_death.tscn" id="2_1ealj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_a62es"]
+friction = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ealj"]
 radius = 35.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_a62es"]
+radius = 400.0
+
 [node name="Tank" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_a62es")
 lock_rotation = true
 script = ExtResource("1_6lwfj")
 movement_speed = 35.0
 
+[node name="FlippyStuff" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="FlippyStuff"]
+
+[node name="TurretPivot" type="Node2D" parent="FlippyStuff"]
+
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1ealj")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Node" parent="." instance=ExtResource("2_1ealj")]
 
-[node name="UnitDetector" type="Area2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UnitDetector"]
+[node name="DetectionRange" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
 
-[connection signal="body_entered" from="UnitDetector" to="." method="_entered_range"]
-[connection signal="body_exited" from="UnitDetector" to="." method="_exited_range"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+shape = SubResource("CircleShape2D_a62es")

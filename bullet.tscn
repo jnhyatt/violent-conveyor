@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmr733rj6m8uv"]
+
+[ext_resource type="PackedScene" uid="uid://dq4k4mcke3ba3" path="res://projectile.tscn" id="1_v7oki"]
+[ext_resource type="Texture2D" uid="uid://b8dxquexpv1jk" path="res://kenney/tanks/PNG/Default size/tank_bulletFly1.png" id="2_v8qja"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v8qja"]
+radius = 8.0
+
+[node name="Projectile" instance=ExtResource("1_v7oki")]
+speed = 540.0
+
+[node name="CollisionShape2D" parent="ColliderArea" index="0"]
+shape = SubResource("CircleShape2D_v8qja")
+
+[node name="Sprite2D" parent="." index="1"]
+position = Vector2(-21, 0)
+texture = ExtResource("2_v8qja")
