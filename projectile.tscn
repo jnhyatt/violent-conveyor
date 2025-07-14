@@ -15,5 +15,8 @@ monitorable = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="ColliderArea" to="." method="_on_collider_area_area_entered"]
 [connection signal="body_entered" from="ColliderArea" to="." method="on_hit"]
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

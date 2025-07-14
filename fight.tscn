@@ -136,7 +136,7 @@ script = ExtResource("9_hcub5")
 cost = 7
 
 [node name="FriendlySpawnPoint" type="Node2D" parent="."]
-position = Vector2(-60, 420)
+position = Vector2(-40, 420)
 
 [node name="GraySpawner" type="Node2D" parent="FriendlySpawnPoint"]
 script = ExtResource("4_34m47")
@@ -151,7 +151,7 @@ script = ExtResource("4_34m47")
 spawnee = ExtResource("7_2ssja")
 
 [node name="EnemySpawnPoint" type="Node2D" parent="."]
-position = Vector2(528, 413)
+position = Vector2(520, 420)
 scale = Vector2(-1, 1)
 
 [node name="GraySpawner" type="Node2D" parent="EnemySpawnPoint"]

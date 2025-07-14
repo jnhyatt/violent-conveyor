@@ -1,12 +1,26 @@
-[gd_scene load_steps=9 format=3 uid="uid://bunfl4jbb2i5m"]
+[gd_scene load_steps=8 format=3 uid="uid://bunfl4jbb2i5m"]
 
 [ext_resource type="PackedScene" uid="uid://cp3op0e0u727m" path="res://tank.tscn" id="1_sp55c"]
 [ext_resource type="PackedScene" uid="uid://bmr733rj6m8uv" path="res://bullet.tscn" id="2_prucm"]
 [ext_resource type="Texture2D" uid="uid://277qk1mlsp84" path="res://kenney/tanks/PNG/Default size/tanks_tankGrey3.png" id="2_v8cex"]
-[ext_resource type="PackedScene" uid="uid://b7kakptlee7u7" path="res://splatter.tscn" id="4_dl24d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dl24d"]
 radius = 18.0
+
+[sub_resource type="Animation" id="Animation_f03ew"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:fire_state")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_dl24d"]
 resource_name = "fire"
@@ -62,21 +76,6 @@ tracks/3/keys = {
 "values": [0, 1]
 }
 
-[sub_resource type="Animation" id="Animation_f03ew"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:fire_state")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x1duo"]
 _data = {
 &"RESET": SubResource("Animation_f03ew"),
@@ -98,9 +97,6 @@ position = Vector2(-2, -11)
 
 [node name="Collision" parent="." index="1"]
 shape = SubResource("CircleShape2D_dl24d")
-
-[node name="Node" parent="." index="2"]
-spawnees = Array[PackedScene]([ExtResource("4_dl24d")])
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {

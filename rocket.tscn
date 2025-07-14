@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://tcfovonhh51c"]
+
+[ext_resource type="PackedScene" uid="uid://dq4k4mcke3ba3" path="res://projectile.tscn" id="1_fj03e"]
+[ext_resource type="Texture2D" uid="uid://b2dpxf0bhfj0u" path="res://kenney/tanks/PNG/Default size/tank_bulletFly3.png" id="2_r2l15"]
+[ext_resource type="PackedScene" uid="uid://d15t8od6kqvpa" path="res://spawn_on_death.tscn" id="3_tpb7v"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cum1y"]
+radius = 3.0
+height = 18.0
+
+[node name="Projectile" instance=ExtResource("1_fj03e")]
+speed = 360.0
+range = 210.0
+
+[node name="CollisionShape2D" parent="ColliderArea" index="0"]
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_cum1y")
+
+[node name="Sprite2D" parent="." index="1"]
+position = Vector2(-12, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_r2l15")
+
+[node name="SpawnOnDeath" parent="." index="3" instance=ExtResource("3_tpb7v")]

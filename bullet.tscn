@@ -18,7 +18,3 @@ shape = SubResource("CircleShape2D_v8qja")
 position = Vector2(-9, 0)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_v8qja")
-
-[node name="Timer" type="Timer" parent="." index="2"]
-
-[connection signal="timeout" from="Timer" to="." method="queue_free"]
