@@ -7,6 +7,6 @@ func _ready():
 
 func _on_parent_exiting():
 	for spawnee in spawnees:
-		var object = spawnee.instantiate()
+		var object := spawnee.instantiate() as Node2D
 		object.global_position = get_parent().global_position
 		get_parent().get_parent().add_child.call_deferred(object)
