@@ -1,13 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp3op0e0u727m"]
+[gd_scene load_steps=5 format=3 uid="uid://cp3op0e0u727m"]
 
 [ext_resource type="Script" uid="uid://bxumbd01t1n16" path="res://tank.gd" id="1_6lwfj"]
 [ext_resource type="PackedScene" uid="uid://d15t8od6kqvpa" path="res://spawn_on_death.tscn" id="2_1ealj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_a62es"]
 friction = 0.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_1ealj"]
-radius = 35.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a62es"]
 radius = 400.0
@@ -25,7 +22,6 @@ movement_speed = 35.0
 [node name="TurretPivot" type="Node2D" parent="FlippyStuff"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1ealj")
 
 [node name="Node" parent="." instance=ExtResource("2_1ealj")]
 
@@ -37,3 +33,9 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 shape = SubResource("CircleShape2D_a62es")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_right = 4.0
+offset_bottom = 4.0
+value = 100.0
+show_percentage = false

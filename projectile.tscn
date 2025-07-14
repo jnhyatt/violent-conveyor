@@ -16,3 +16,4 @@ monitorable = false
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [connection signal="area_entered" from="ColliderArea" to="." method="_on_collider_area_area_entered"]
+[connection signal="body_entered" from="ColliderArea" to="." method="on_hit"]

@@ -1,21 +1,41 @@
 extends RigidBody2D
+class_name Tank
+
+enum FireState {
+	Warmup,
+	Cooldown,
+}
 
 @export var movement_speed: float
 @export var range: float
 @export var ammo: PackedScene
+@export var max_hp: float
+@export var fire_state := FireState.Warmup
 
 var allegiance: int
 var detected_enemies: Dictionary[Node2D, bool] = {}
+var _hp: float
+var hp: float:
+	set(new_value):
+		$ProgressBar.value = new_value
+		_hp = new_value
+		if new_value <= 0:
+			queue_free()
+	get:
+		return _hp
 
 var target: Node2D:
 	set(new_value):
 		if new_value != null:
 			linear_velocity = Vector2.ZERO
-			# start animation if not started
-			$AnimationPlayer.play("fire")
+			$FlippyStuff/TurretPivot.global_rotation = movement_dir.angle()
+			if not $AnimationPlayer.is_playing():
+				$AnimationPlayer.play("fire")
 		else:
 			linear_velocity = movement_dir * movement_speed
-			$AnimationPlayer.stop()
+			$FlippyStuff/TurretPivot.rotation = 0
+			if fire_state == FireState.Warmup:
+				$AnimationPlayer.stop()
 
 var _movement_dir := Vector2.RIGHT
 var movement_dir: Vector2:
@@ -33,6 +53,10 @@ func enemy_dir() -> Vector2:
 		return Vector2.RIGHT
 	else:
 		return Vector2.LEFT
+
+func _ready() -> void:
+	hp = max_hp
+	$ProgressBar.max_value = max_hp
 
 func _process(delta: float) -> void:
 	var closest_enemy = null
@@ -54,15 +78,19 @@ func _process(delta: float) -> void:
 		target = null
 
 func enemy_detected(unit: Node2D):
-	var theirAllegiance = unit.get("allegiance")
-	if theirAllegiance != null:
-		if allegiance != theirAllegiance:
+	var their_allegiance = unit.get("allegiance")
+	if their_allegiance != null:
+		if allegiance != their_allegiance:
 			detected_enemies[unit] = true
 
 func enemy_lost(unit: Node2D):
 	detected_enemies.erase(unit)
 
 func fire():
-	var bullet = ammo.instantiate()
+	var bullet = ammo.instantiate() as Projectile
 	bullet.global_transform = $FlippyStuff/TurretPivot.global_transform
+	bullet.allegiance = allegiance
 	get_parent().add_child(bullet)
+
+func deal_damage(amount: float) -> void:
+	hp -= amount

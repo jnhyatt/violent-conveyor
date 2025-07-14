@@ -55,7 +55,7 @@ tile_map_data = PackedByteArray("AAABAAYAAAAWAAwAAAABAAcAAAAWAA0AAAADAAgAAAAWAAw
 tile_set = ExtResource("2_h2yge")
 
 [node name="FoodTimer" type="Timer" parent="."]
-wait_time = 0.439
+wait_time = 0.3
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -151,7 +151,7 @@ script = ExtResource("4_34m47")
 spawnee = ExtResource("7_2ssja")
 
 [node name="EnemySpawnPoint" type="Node2D" parent="."]
-position = Vector2(427, 413)
+position = Vector2(528, 413)
 scale = Vector2(-1, 1)
 
 [node name="GraySpawner" type="Node2D" parent="EnemySpawnPoint"]
@@ -170,7 +170,7 @@ allegiance = 1
 spawnee = ExtResource("7_2ssja")
 
 [node name="Walls" type="StaticBody2D" parent="."]
-position = Vector2(196, 423)
+position = Vector2(240, 420)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2(0, -100)
@@ -181,8 +181,17 @@ shape = SubResource("WorldBoundaryShape2D_hcub5")
 position = Vector2(0, 100)
 shape = SubResource("WorldBoundaryShape2D_2ssja")
 
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-360, 0)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_2ssja")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls"]
+position = Vector2(360, 0)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_2ssja")
+
 [node name="WaveTimer" type="Timer" parent="."]
-wait_time = 5.0
 autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

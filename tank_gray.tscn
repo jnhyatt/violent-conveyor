@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bunfl4jbb2i5m"]
+[gd_scene load_steps=9 format=3 uid="uid://bunfl4jbb2i5m"]
 
 [ext_resource type="PackedScene" uid="uid://cp3op0e0u727m" path="res://tank.tscn" id="1_sp55c"]
 [ext_resource type="PackedScene" uid="uid://bmr733rj6m8uv" path="res://bullet.tscn" id="2_prucm"]
 [ext_resource type="Texture2D" uid="uid://277qk1mlsp84" path="res://kenney/tanks/PNG/Default size/tanks_tankGrey3.png" id="2_v8cex"]
 [ext_resource type="PackedScene" uid="uid://b7kakptlee7u7" path="res://splatter.tscn" id="4_dl24d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dl24d"]
+radius = 18.0
 
 [sub_resource type="Animation" id="Animation_dl24d"]
 resource_name = "fire"
@@ -32,7 +35,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0.366667, 0.7, 1.2, 1.5),
 "transitions": PackedFloat32Array(0.554785, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-15, 0), Vector2(4, 0), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(-8, 0), Vector2(2, 0), Vector2(0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -46,9 +49,33 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.0, 0.174533, -0.523599, 0.0872665, 0.0, 0.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:fire_state")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
 
 [sub_resource type="Animation" id="Animation_f03ew"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:fire_state")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x1duo"]
 _data = {
@@ -57,15 +84,20 @@ _data = {
 }
 
 [node name="RigidBody2D" instance=ExtResource("1_sp55c")]
-movement_speed = 60.0
-range = 300.0
+movement_speed = 28.0
+range = 240.0
 ammo = ExtResource("2_prucm")
+max_hp = 5.0
 
 [node name="Sprite" parent="FlippyStuff" index="0"]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_v8cex")
 
 [node name="TurretPivot" parent="FlippyStuff" index="1"]
-position = Vector2(11, -21)
+position = Vector2(-2, -11)
+
+[node name="Collision" parent="." index="1"]
+shape = SubResource("CircleShape2D_dl24d")
 
 [node name="Node" parent="." index="2"]
 spawnees = Array[PackedScene]([ExtResource("4_dl24d")])
@@ -74,6 +106,12 @@ spawnees = Array[PackedScene]([ExtResource("4_dl24d")])
 libraries = {
 &"": SubResource("AnimationLibrary_x1duo")
 }
+
+[node name="ProgressBar" parent="." index="5"]
+offset_left = -25.0
+offset_top = -33.0
+offset_right = 25.0
+offset_bottom = -24.0
 
 [connection signal="body_entered" from="DetectionRange" to="." method="enemy_detected"]
 [connection signal="body_exited" from="DetectionRange" to="." method="enemy_lost"]
